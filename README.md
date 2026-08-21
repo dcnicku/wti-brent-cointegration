@@ -130,7 +130,7 @@ Oil Market did not change just the contract rolled forward.
 ### Two further caveats
 
 **WTI does not pass I(1) precondition.**
-During the training period, ADF test rejects the hypothesis
+During the training period, Augmented Dickey Fuller(ADF) test rejects the hypothesis
 for WTI levels at 5% significance level (p = 0.026),  result for Brent is not significant (p = 0.067).
 A p-value above 0.05 does not provide sufficient evidence to reject the hypothesis,
 the results do not clearly confirm that both series are I(1). 

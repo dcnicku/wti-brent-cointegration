@@ -4,29 +4,25 @@ Maths supporting WTI–Brent-Cointegration Model in the order of python script.
 
 ---
 
-## 1. Notation and why logs
+## 1. Notation
 
 Let `P^W_t` and `P^B_t` be the daily closing prices of front month WTI and Brent
-futures. I work with log prices:
+futures.
 
     x_t = ln(P^W_t),    y_t = ln(P^B_t)
 
 Three reasons for logs:
 
-1. Log differences are approximately percentage returns, and they add up over
-   time — the sum of daily log returns is the total log return.
-2. The regression coefficient `β` becomes a proportional relationship rather
-   than a dollar-for-dollar one. That matters here because crude traded between
-   roughly $20 and $120 over the sample, so a fixed dollar hedge would mean
-   something very different at each end.
-3. Position sizing follows directly: a one-unit move in log price is a 1% move
-   in price, so `β` is the relative size of the two legs.
+1. Log differences are percentage returns.
+2. Regression coefficient `β` becomes a proportional relationship
+4. Position sizing: a one unit move in log price is a 1% move
+   in price, so `β` is the relative size of the both.
 
 ---
 
 ## 2. Order of integration
 
-Commodity prices are usually I(1) — they contain a unit root:
+Commodity prices are usually I(1) they have a unit root:
 
     x_t = x_{t-1} + e_t
 

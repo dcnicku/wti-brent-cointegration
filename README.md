@@ -69,33 +69,29 @@ Estimated on 2016–2021, traded on 2022-01-03 to 2026-08-16 (1,160 days).
 | 10bps | 1.13 | 0.92 | 50.5% | −8.0% | 26 |
 | 25bps | 1.13 | 0.59 | 28.6% | −8.3% | 26 |
 
-Buy and hold WTI over the identical window: Sharpe 0.26, total return 11.0%,
-max drawdown −55.3%.
+Buy and hold WTI: Sharpe 0.26, total return 11.0%, max drawdown −55.3%.
 
-Taken at face value this looks good: the edge decays roughly linearly in cost
-and is still positive at 25bps, the strategy is in the market only 29% of the
-time, and its worst drawdown is 8% against 55% for holding the outright. The win
-rate is 92% on 26 trades.
+the strategy is still positive at 25bps, whilst the strategy is in the market only 29% oftrading days,
+and max drawdown is 8% against 55% for holding. 
+Win rate is 92% on 26 trades.
 
-That win rate is what made me check further.
+
+Win rate seemed too high therefore I checked further.
 
 ![equity curves](results/fig2_equity.png)
 
-Notice the step in early 2026. One day carries a large share of the whole
-result, and the curve is nearly flat around it.
+One day carries a large share of the whole result (early 2026).
 
 ---
 
 ## Why the result is not real
 
-**Where the money comes from.** The single best day, 2026-04-01, is **27.5%** of
-all gross P&L. The best five days are **64.1%**. A strategy with a genuine edge
-spreads its returns across the sample; one that harvests a recurring artefact
-concentrates them.
+The single best day, 2026-04-01, is 27.5% of P&L.
+The best five days are 64.1%. An Alpha producing strategy
+returns are constiently spread.
 
-**Those days are contract roll dates.** These are front-month continuous
-futures, so when a contract expires the series jumps to the next one. That jump
-is bookkeeping, not a price move. Splitting the sample on whether a day is the
+front-month futures,when a contract expires the series jumps to the next one.
+That jump is for accounting not a price move. Splitting the sample on whether a day is the
 first trading day of a month:
 
 | | Month-start days | All other days |

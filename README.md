@@ -26,11 +26,15 @@ The trade is to profit from the spread. Buy the cheap grade, sell the
 expensive one, in the proportion to the hedge ratio. If crude rises,
 both move together and largely cancel the position is a trade on the gap.
 
-**Why cointegration and not correlation.** Correlation is measured on returns
-and says nothing about whether the *level* gap closes. Two series can have
-almost perfectly correlated returns and still drift apart forever if their
-trends differ. Cointegration is a statement about levels sharing a common trend,
-and that is the property the trade actually depends on.
+**Why cointegration and not correlation** 
+Correlation measures how closely two assets returns move together,
+but it does not tell if the difference between their
+price levels will get closer. 2 assests could have similar returns
+and their prices continue to move further apart over time. 
+Cointegration, highlights the long-term relationship between price levels, 
+highlighting if they share a trend. 
+
+
 
 ---
 

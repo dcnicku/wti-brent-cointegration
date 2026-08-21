@@ -1,12 +1,12 @@
 # Methodology
 
-The maths behind the WTI–Brent cointegration study, in the order the code runs.
+Maths supporting WTI–Brent-Cointegration Model in the order of python script.
 
 ---
 
 ## 1. Notation and why logs
 
-Let `P^W_t` and `P^B_t` be the daily closing prices of front-month WTI and Brent
+Let `P^W_t` and `P^B_t` be the daily closing prices of front month WTI and Brent
 futures. I work with log prices:
 
     x_t = ln(P^W_t),    y_t = ln(P^B_t)

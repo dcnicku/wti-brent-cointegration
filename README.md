@@ -115,16 +115,16 @@ shows that the jump was not obtainabe:
  
 On tradeable days the strategy loses.
 
-This is what the mechanism looks like in the data — the entry on 2026-03-31 and
-the "profit" the next day:
+Trade,the entry on 31 March 2026 and
+the profit the next day:
 
 | Date | spread | z | position | gross return |
 |---|---|---|---|---|
-| 2026-03-31 | −0.2489 | −3.36 | enters long | — |
+| 2026-03-31 | −0.2489 | −3.36 | enters long | |
 | 2026-04-01 | −0.1014 | **+2.25** | long | **+14.8%** |
 
-The spread moved 15% and the z-score travelled from −3.4 to +2.3 in a single
-session. Nothing in the oil market did that. The contract rolled.
+The spread moved 15% and the z-score went from −3.4 to +2.3.
+Oil Market did not change just the contract rolled forward.
 
 `src/diagnostics.py` runs this decomposition; it is step 8 of the pipeline.
 

@@ -216,19 +216,5 @@ content.
 **Benchmark.** Buy and hold WTI over the same window, to show whether the
 market-neutral spread adds anything over simple directional exposure.
 
----
 
-## 8. Limitations
 
-1. **Roll artefacts.** Front-month continuous series contain jumps at contract
-   expiry that are accounting artefacts, not price moves. Not corrected here, so
-   some of the measured spread volatility is roll. Back-adjusted continuous
-   contracts would fix this.
-2. **No financing costs.** Borrow and margin on the short leg are not modelled.
-3. **Close-to-close execution.** Assumes fills at the closing price, with no
-   slippage or market impact.
-4. **A single pair.** No diversification; everything depends on one
-   relationship continuing to hold.
-5. **A fixed hedge ratio.** `β̂` is estimated once on the training window. The
-   rolling-β chart shows how much it actually moves, and letting it vary over
-   time is the obvious extension.

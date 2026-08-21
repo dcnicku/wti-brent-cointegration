@@ -57,10 +57,10 @@ The maths is written out in [METHODOLOGY.md](METHODOLOGY.md).
 
 ## Results
 
-Estimated on 2016–2021, traded on 2022-01-03 to 2026-08-18 (1,162 days).
+Estimated on 2016–2021, traded on 2022-01-03 to 2026-08-16 (1,160 days).
 
-- Hedge ratio β = **1.020** (train window, held fixed)
-- Half-life = **13.5 trading days** → z-score window 67 days, time stop 40 days
+- Hedge ratio β = **1.020** 
+- Half-life = **13.5 trading days** → z-score 67 days
 
 | One-way cost | Gross Sharpe | Net Sharpe | Total return | Max drawdown | Trades |
 |---|---|---|---|---|---|

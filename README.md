@@ -98,7 +98,7 @@ first trading day of a month:
 |---|---|---|
 | Share of sample | 4.8% (56 days) | 95.2% (1,105 days) |
 | **Share of gross P&L** | **94.0%** | **6.0%** |
-| Mean daily \|spread move\| | 0.0181 | 0.0038 |
+| Mean daily | | 0.0181 | 0.0038 |
 
 The spread moves **4.8× more** on roll days, and **8 of the 20 largest spread
 moves** in the sample fall on them, where chance would give about 1.

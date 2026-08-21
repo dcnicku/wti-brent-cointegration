@@ -5,29 +5,26 @@ gap between WTI and Brent is cointegrated, estimate how quickly it closes, and
 then check whether a mean reversion rule built on the estimate is profitable
 after transaction costs.
 
-**Headline result: the strategy appears to work, and doesn't.** The backtest
-returns a net Sharpe of 0.92 out of sample after 10bps costs, against 0.26 for
-buying and holding WTI. That number is not real. Decomposing the P&L shows that
-**94% of it is earned on the 4.8% of days when the futures contracts roll** —
-days on which the price series jumps for accounting reasons and no trader could
-have captured the move. Strip those days out and the Sharpe is **−0.21**.
+The backtest returns a net Sharpe of 0.92 out of sample after 10bps costs,
+against 0.26 when buying and holding WTI. Decomposing the P&L shows that
+94% is earned on the 4.8% of days when the futures contracts roll
+and other financial instruments close. Remove those days out, Sharpe is −0.21.
 
-The finding of this project is the artefact, not the Sharpe.
+
 
 ---
 
 ## The question
 
-WTI and Brent are two grades of crude oil. They differ in sulphur content,
-density and where they are delivered, but they are close substitutes, so their
-prices are driven by the same global supply and demand. That suggests the gap
-between them should be temporary rather than permanent: when it widens without
-anything real changing, it should close again.
+WTI and Brent are two grades of crude oil. They differ in sulphur,
+density and delivery, whilst being close substitutes, therefore
+prices are influenced by the same supply and demand. Therefore the gap
+between them should be temporary rather than permanent
+when it widens without it should close again.
 
-The trade that follows is market-neutral. Buy the cheap grade, sell the
-expensive one, in the proportion given by the hedge ratio. If crude rallies,
-both legs move together and largely cancel — the position is a bet on the gap,
-not on the oil price.
+The trade is to profit from the spread. Buy the cheap grade, sell the
+expensive one, in the proportion to the hedge ratio. If crude rises,
+both move together and largely cancel the position is a trade on the gap.
 
 **Why cointegration and not correlation.** Correlation is measured on returns
 and says nothing about whether the *level* gap closes. Two series can have

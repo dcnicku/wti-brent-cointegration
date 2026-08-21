@@ -1,4 +1,4 @@
-# Does the WTI–Brent spread mean revert enough to trade?
+# Does WTI Brent spread mean revert enough to profit?
 
 I test whether the spread between WTI and Brent is cointegrated and
 estimate how quickly it closes, andthen check whether a mean reversion rule

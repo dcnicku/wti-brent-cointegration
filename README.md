@@ -100,20 +100,20 @@ first trading day of a month:
 | **Share of gross P&L** | **94.0%** | **6.0%** |
 | Mean daily | 0.0181 | 0.0038 |
 
-The spread moves **4.8× more** on roll days, and **8 of the 20 largest spread
-moves** in the sample fall on them, where chance would give about 1.
+The spread moves 4.8× more on roll days and 8 of the 20 largest spread
+movesin the sample fall on them.
 
-**What is left without them.** Setting every month-start return to zero — the
-pessimistic reading, that none of the jump was capturable:
+**What is left without them.** 
+Setting every start of the month return to zero 
+shows that the jump was not obtainabe:
 
 | | With roll days | Roll days zeroed |
 |---|---|---|
 | Net Sharpe (10bps) | 0.92 | **−0.21** |
 | Total return | 50.5% | **−5.8%** |
 | Annualised return | 9.3% | **−1.3%** |
-
-So the entire result is the artefact. On the days you could actually trade, the
-strategy loses money slowly.
+ 
+On tradeable days the strategy loses.
 
 This is what the mechanism looks like in the data — the entry on 2026-03-31 and
 the "profit" the next day:

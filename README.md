@@ -1,9 +1,8 @@
 # Does the WTI–Brent spread mean revert enough to trade?
 
-An econometrics project on 2 crude oil benchmarks. I test whether the
-gap between WTI and Brent is cointegrated, estimate how quickly it closes, and
-then check whether a mean reversion rule built on the estimate is profitable
-after transaction costs.
+I test whether the spread between WTI and Brent is cointegrated and
+estimate how quickly it closes, andthen check whether a mean reversion rule
+is profitable after transaction costs.
 
 The backtest returns a net Sharpe of 0.92 out of sample after 10bps costs,
 against 0.26 when buying and holding WTI. Decomposing the P&L shows that

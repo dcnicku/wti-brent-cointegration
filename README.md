@@ -126,60 +126,51 @@ the profit the next day:
 The spread moved 15% and the z-score went from −3.4 to +2.3.
 Oil Market did not change just the contract rolled forward.
 
-`src/diagnostics.py` runs this decomposition; it is step 8 of the pipeline.
+`src/diagnostics.py` runs this, step 8 on the pipeline.
 
 ### Two further caveats
 
-**WTI does not cleanly pass the I(1) precondition.** On the training window the
-ADF test rejects a unit root in WTI levels at 5% (p = 0.026) while Brent does
-not (p = 0.067). Cointegration analysis assumes both series are I(1), so the
-setup is not cleanly satisfied to begin with.
+**WTI does not pass I(1) precondition.**
+During the training period, ADF test rejects the hypothesis
+for WTI levels at 5% significance level (p = 0.026),  result for Brent is not significant (p = 0.067).
+A p-value above 0.05 does not provide sufficient evidence to reject the hypothesis,
+the results do not clearly confirm that both series are I(1). 
+The cointegration requires both to be I(1), this is not 100% satisfied.
 
-**The cointegration evidence straddles the 5% line.** WTI on Brent gives
-p = 0.023; the reverse regression gives p = 0.052. The conclusion depends on
-which variable sits on the left-hand side.
 
-### What would settle it
-
-Rerun on **back-adjusted continuous contracts**, where the roll is spliced out
-rather than left in as a jump. My prediction is that the remaining edge is
-somewhere near the −0.21 figure above, i.e. nothing. The cheap alternative is to
-simply refuse to trade on roll dates, which the diagnostic above already
-simulates.
+**The cointegration evidence at 5%.** 
+WTI on Brent, p = 0.026 while the reverse regression gives p = 0.052.
 
 ---
 
 ## Two ways this could have gone wrong
 
-Both of these make a backtest look good for reasons that have nothing to do with
-the strategy, so I handled them explicitly.
 
-**Using information I would not have had at the time.** The z-score is computed
-on a strictly trailing window. Standardising against the full-sample mean and
-standard deviation would put 2024 information into a signal dated 2022, which is
-the most common way this kind of backtest produces a fake result. Check 5 in the
-test file verifies this: the z-score at day 800 is the same whether it is
-computed on 800 days of data or on all 1,500.
+**Using information I would not have had at the time.** 
+The z-score is calculated using most recent data, not the whole data set therefore
+standardising the full data set mean and standard deviation.
+ 
 
-**Trading at a price I could not have got.** A signal from the close of day *t*
+**Trading at a unobtainable price .**
+A signal from the close of day *t*
 is traded at the close of day *t+1*. Positions are lagged one day before being
-applied to returns, and costs are charged on the day the position actually
-changes rather than the day the signal fires.
+applied and costs are charged on the day the position actually
+changes rather than the day of tje signal.
 
-The hedge ratio β is estimated on the training window and then held fixed. The
-test period never influences any parameter.
+The hedge ratio β is estimated on the training window and then held.
+The test period does not influence any measure/parameter.
 
 ---
 
 ## Checking the code is right
 
-The problem with a project like this is that on real data I have no idea what
-the true hedge ratio or half-life is, so a broken estimator would look exactly
+The problem with a project like this is that on real data 
+the true hedge ratio or half-life is unknown, a wrong estimator looks
 like a real result. `tests/test_synthetic.py` builds two series that are
-cointegrated *by construction*, with a β and a half-life I picked, and checks
-the code recovers them. It also runs a negative control on two unrelated random
-walks, which must fail the cointegration test, and a check that the stop-loss
-does not immediately re-enter the trade it just exited.
+cointegrated , with a β and a half-life I picked.
+It runs a negative control test to ensure does not produce similar result on two unrelated random
+walks, which must fail the cointegration test, and to check the stoploss
+does not enter the trade it exited.
 
 ```bash
 python tests/test_synthetic.py
@@ -227,25 +218,20 @@ Charts, the daily backtest, the cost sweep and a summary table are written to
 
 ## What this does not do
 
-1. **Roll artefacts.** Not corrected, and as shown above they account for
-   essentially the whole result. Back-adjusted continuous contracts would fix
-   this and are the single most important next step.
-2. **No financing costs.** Borrow and margin on the short leg are not modelled.
-3. **Close-to-close fills.** No slippage, no market impact.
-4. **One pair.** Everything rests on a single relationship holding up.
-5. **A fixed hedge ratio.** β is estimated once. `results/fig3_beta.png` shows
-   how much it actually moves over the sample, which is the evidence for or
-   against that assumption.
+1. **Futures** continuous contracts would fix this (next improvement)
+2. **No financing costs** 
+3. **No slippage and no market impact.** 
+4. **A fixed hedge ratio.** β was estimated one time. `results/fig3_beta.png` shows
+   how much β moves over the sample.
 
-## Where I would take it next
+## Next steps
 
-- Rerun on back-adjusted continuous contracts, to see whether anything survives
-  once the roll jumps are spliced out
-- Let β drift over time instead of fixing it
-- Allow different reversion speeds in calm and stressed periods
-- Extend to other energy spreads (heating oil, crack spreads)
+- Continuous contracts to see if model survives when jumps are removed
+- Let β drift instead of fixed β
+- Allow different reversions depending on regime
+- Model other energy instruments
 
 ---
 
-*Written in Python with AI assistance on the implementation. The question,
+*Written in Python with AI assistance on the implementation of the code. The question,
 the method, the validation design and the interpretation are mine.*

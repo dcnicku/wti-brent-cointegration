@@ -1,31 +1,30 @@
 # Methodology
 
-The maths behind the WTI-Brent cointegration model, in roughly the order the script runs.
+The maths behind the WTI-Brent cointegration model.
 
 ---
 
 ## 1. Notation
 
-`P^W_t` and `P^B_t` are daily closing prices of the front month WTI and Brent futures.
+`P^W_t` and `P^B_t` are daily closing prices of front month WTI and Brent futures.
 
     x_t = ln(P^W_t),    y_t = ln(P^B_t)
 
-Everything is in logs. Log differences are percentage returns, and `β` comes out as a
-proportional relationship rather than a dollar one, so it tells me directly how much
-Brent to hold against a unit of WTI.
+Log are used as they show differences are percentage returns and `β` comes out as a
+proportional relationship so it tells how much Brent to hold against a unit of WTI.
 
 ---
 
-## 2. Order of integration
+## 2. Unit root
 
-Commodity prices are usually I(1), meaning they contain a unit root:
+Commodity prices are usually I(1) (have a unit root):
 
     x_t = x_{t-1} + e_t
 
-A random walk has no level to come back to, so there is nothing to trade on a
-mean-reversion argument. I run ADF on both series and want no rejection in levels
-and a rejection in first differences. That pair of results is what I(1) means, and
-I need it in both legs before cointegration is the right tool.
+A random walk wanders, so there is no mean reversion trade
+Augmented Dickey–Fuller test is used on both series to test for unit root. 
+That pair of results need to be I(1); no rejection in log prices but rejection in log returns
+Unit root has to be confirmed before cointegration.
 
 ---
 

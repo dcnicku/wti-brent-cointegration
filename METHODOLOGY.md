@@ -30,39 +30,38 @@ Unit root has to be confirmed before cointegration.
 
 ## 3. Engle-Granger cointegration
 
-Two I(1) series are cointegrated if some linear combination of them is stationary.
-They share a common trend and the gap between them is temporary.
+Two I(1) series are cointegrated if a weighted difference between the two is stationary.
+They share a common trend once that is gone the rest mean reverts.
 
-### Step 1: the cointegrating regression
+### Step 1: cointegrating regression
+
+ Regress log WTI on log Brent:
 
     x_t = α + β·y_t + s_t                                            (1)
 
-by OLS. The fitted residual
+The gap between the actual price and the fitted one is the spread.
 
     ŝ_t = x_t - α̂ - β̂·y_t                                           (2)
 
-is the spread. `β̂` is the hedge ratio: 1 unit of notional in WTI against `β̂` units
-of Brent, opposite directions.
 
-The test isn't symmetric in finite samples, so regressing WTI on Brent gives a
-different answer from the reverse. I fixed it as WTI on Brent since Brent is the
-global benchmark and WTI the regional grade. The reverse regression is reported as a
-robustness check, not as a second candidate.
+The test isn't symmetric in finite samples, so regressing WTI on Brent and regressing Brent
+on WTI do not give the same answer. I picked WTI on Brent and stuck with it:
+Brent is the global benchmark and WTI the regional grader. 
 
 ### Step 2: is the residual stationary?
 
-ADF on the spread:
+Augmented Dickey–Fuller test on the spread:
 
     Δŝ_t = γ·ŝ_{t-1} + Σ δ_i·Δŝ_{t-i} + u_t                          (3)
 
-    H₀: γ = 0   unit root, NOT cointegrated
+    H₀: γ = 0   unit root, not cointegrated
     H₁: γ < 0   stationary, cointegrated
 
-The critical values are not the ordinary ADF ones. `ŝ_t` isn't observed data, it's a
-residual, and step 1 has already picked `β̂` to minimise its variance. That tilts the
-test toward stationarity whether or not it's there, so the Engle-Granger critical
-values are stricter than the standard ADF table. `statsmodels.tsa.stattools.coint`
-uses the right ones; `adfuller` on the residual would overstate significance.
+Normal ADF critical values do not apply as `ŝ_t` is not real data, it is a
+residual and step 1 chose `β̂` to make it as small as possible (minimise variance). That
+makes it look stationary even when it is not, so Engle-Granger uses stricter critical values.
+`statsmodels.tsa.stattools.coint` applies them. Running `adfuller` on the residual
+instead would make the result look more significant than it is(false relationship).
 
 ---
 

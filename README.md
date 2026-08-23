@@ -13,7 +13,7 @@ and other financial instruments close. Remove those days out, Sharpe is −0.21.
 
 ---
 
-## The question
+## Why
 
 WTI and Brent are two grades of crude oil. They differ in sulphur,
 density and delivery, whilst being close substitutes, therefore

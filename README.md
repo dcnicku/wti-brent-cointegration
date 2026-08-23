@@ -232,5 +232,5 @@ Charts, the daily backtest, the cost sweep and a summary table are written to
 
 ---
 
-*Written in Python with AI assistance on the implementation of the code. The question,
-the method, the validation design and the interpretation are mine.*
+*Written in Python with AI assistance on the  code. Question,
+ method, validation, design and interpretation are mine.*

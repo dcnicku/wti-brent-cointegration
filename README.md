@@ -41,16 +41,16 @@ highlighting if they share a trend.
 
 | Step | What I do |
 |---|---|
-| Transform | Log prices differences are percentage returns |
-| Cointegration | Engle Granger, WTI regressed on Brent |
-| Hedge ratio | The OLS slope β estimated on the training window  |
-| Reversion speed | AR(1) fit on the spread, giving a half-life τ |
-| Signal | Rolling z-score of the spread, window = 5τ capped to [30, 120] days |
-| Rules | Enter at \|z\|>2, exit at \|z\|<0.5, stop at \|z\|>3.5, time stop at 3τ |
-| Costs | 0 / 5 / 10 / 25 bps one-way |
+| Transform | Log prices differences percentage returns |
+| Cointegration | Engle Granger WTI regressed on Brent |
+| Hedge ratio | The OLS slope β estimated on training window  |
+| Reversion speed | AR(1) fit on the spread given a half-life τ |
+| Signal | Rolling z-score of the spread window = 5τ capped to [30, 120] days |
+| Rules | Enter at \|z\|>2 exit at \|z\|<0.5 stop at \|z\|>3.5 time stop at 3τ |
+| Costs | 0 / 5 / 10 / 25 bps  |
 | Split | Estimate on 2016–2021, trade 2022 onwards, 1 day execution lag |
 
-The maths is written out in [METHODOLOGY.md](METHODOLOGY.md).
+The maths is in [METHODOLOGY.md](METHODOLOGY.md).
 
 ---
 

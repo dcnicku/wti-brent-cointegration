@@ -156,9 +156,8 @@ The position `p_t` is +1 (long), -1 (short ) or 0 (not in a trade):
 
 
 - `r_t` - today's return
-- `p_{t-1}` -  position held coming into today
+- `p_{t-1}` -  yesterday's position
 - `(Δx_t - β̂·Δy_t)` - Δ  spread today
-- `p_{t-1}` - position execution lag.
 
 ### Costs
 
@@ -166,11 +165,12 @@ A position change trades both WTI and Brent. One-way cost `c` (10bps)
 
     cost_t = |p_{t-1} - p_{t-2}| · (1 + β̂) · c                      (13)
 
-Lagged positions again, since the cost lands when the trade happens rather than when
-the signal fires.
+The executed positions are lagged so cost occur when
+the trade happens not when the signal appears.
 
-A full round trip is `2·(1 + β̂)·c`. At `β̂ ≈ 1` and 10bps that's about 40bps per
-completed trade, which the convergence has to clear.
+A full round trip is `2·(1 + β̂)·c`. `β̂ ≈ 1` `c = 10bps`.
+Approximately 40bps cost when any trade is opened and closed.
+Therefore convergence has to beat 40bps before profit.
 
     r^net_t = r_t - cost_t                                          (14)
 

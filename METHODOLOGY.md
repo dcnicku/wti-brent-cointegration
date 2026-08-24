@@ -45,7 +45,7 @@ The gap between the actual price and the fitted one is the spread.
 
 
 The test isn't symmetric in finite samples, so regressing WTI on Brent and regressing Brent
-on WTI do not give the same answer. I picked WTI on Brent and stuck with it:
+on WTI do not give the same result. I chose WTI on Brent.
 Brent is the global benchmark and WTI the regional grader. 
 
 ### Step 2: is the residual stationary?
@@ -65,39 +65,45 @@ instead would make the result look more significant than it is(false relationshi
 
 ---
 
-## 4. Speed of reversion
+## 4. Timing of the reversion
 
-Model the spread as an Ornstein-Uhlenbeck process:
+The spread is modelled as an Ornstein-Uhlenbeck process:
 
     ds_t = θ(μ - s_t)dt + σ·dW_t                                     (4)
 
-Drift is negative above `μ` and positive below, pulling back at a rate proportional
-to the distance. Expectations:
+It is a random walk that drags towards `μ`. `μ` is the resting level, `θ` is the
+strength of the spring, `σ` is the noise. Expected:
 
     E[s_t | s_0] = μ + (s_0 - μ)·e^(-θt)                             (5)
 
-Deviations decay exponentially, so the half-life is
+Deviations decay exponentially. The half-life is;
 
     τ = ln(2) / θ                                                    (6)
 
-### Estimating it
+### Estimating Half life τ
 
-Discretise (4) daily and it's an AR(1), so OLS:
+Sampled daily (4) becomes a AR(1) which can be fitted with OLS:
 
     Δs_t = a + b·s_{t-1} + u_t                                       (7)
-    φ = 1 + b                                                        (8)
+    φ = 1 + b                                                        (8) 
 
-`φ` is the fraction of today's deviation still there tomorrow. Stationarity needs
-`-2 < b < 0`. Then
+- `Δs_t` — Δ spread today
+- `s_{t-1}` — where the spread was t-1
+- `b` —  slope. How today's move depends on t-1
+- `a` — intercept
+- `u_t` — noise
+- `φ` — amount of t-1 deviation is present in t
+    
+For the spread to revert `-2 < b < 0` same as `-1 < φ < 1`.
 
+    φ^τ = 0.5
+    τ·ln(φ) = ln(0.5)
     τ = ln(0.5) / ln(φ)                                              (9)
 
-I use this rather than `τ = -ln(2)/b`, which is the small-`b` approximation of the
-same thing. Long-run level is `μ = -a/b`, where the drift in (7) is zero.
+I use `τ = ln(0.5) / ln(φ)` instead of `τ = ln(0.5)/b` as it is used when `b` is small.
 
-Same parameter the ADF test looks at: `γ = 0` in (3) is `θ = 0` in (4), which sends
-`τ` to infinity. The test asks whether reversion speed differs from zero. The
-half-life asks by how much.
+`γ` in (3) and `b` in (7) are the same coefficient. ADF test proves if the
+spread reverts at all; the half-life asks how quickly.
 
 ---
 

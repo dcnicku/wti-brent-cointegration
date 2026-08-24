@@ -107,27 +107,27 @@ spread reverts at all; the half-life asks how quickly.
 
 ---
 
-## 5. Trading rules
+## 5. Strategy
 
 ### Standardising the spread
 
     z_t = (s_t - μ̂_t) / σ̂_t                                          (10)
 
-`μ̂_t` and `σ̂_t` come from a trailing window of length `L` ending at `t`, not the full
-sample. Full-sample moments put future information into every past signal.
-
-`L = clip(5τ, 30, 120)` days. Long enough for a stable mean, short enough to follow
-drift in the equilibrium level.
+- `z_t` — how many standard deviations the spread sits from the mean
+- `s_t` — t spread
+- `μ̂_t` — average spread over the last `L` days
+- `σ̂_t` — standard deviation of the spread over `L` days
+-  `L`  — amount of trailing days. 5τ, bounded to [30, 120] days
 
 ### Rules
 
 | Event | Condition | Action |
 |---|---|---|
-| Entry, short spread | `z_t > +2.0` | short WTI, long β·Brent |
-| Entry, long spread | `z_t < -2.0` | long WTI, short β·Brent |
-| Exit | `\|z_t\| < 0.5` | flat |
-| Stop loss | `\|z_t\| > 3.5` | flat, no re-entry until `\|z_t\| < 2.0` |
-| Time stop | held longer than `3τ` | flat |
+| Enter short | `z_t > +2.0` | short WTI long `β` Brent |
+| Enter long | `z_t < -2.0` | long WTI short `β` Brent |
+| Exit | `\|z_t\| < 0.5` |
+| Stop loss | `\|z_t\| > 3.5` | exit, do not enter again until `\|z_t\| < 2.0` |
+| Time stop | held past `3τ` | exit, reversion failed within expected period |
 
 Exit at 0.5σ rather than 0 because the spread crosses exactly zero rarely and
 briefly. Waiting for it gives long holding periods and exits that sometimes never

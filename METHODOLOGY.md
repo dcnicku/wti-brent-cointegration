@@ -180,18 +180,21 @@ Therefore convergence has to beat 40bps before profit.
 
 | Period | Purpose |
 |---|---|
-| 2016-01-01 to 2021-12-31 | Train. Estimate `β̂`, run the cointegration test, estimate `τ`. |
-| 2022-01-01 to present | Test. Trade on the training `β̂` only. |
+| 2016-01-01 to 2021-12-31 | Training period. Estimate `β̂` and `τ` and test for cointegration |
+| 2022-01-01 to present | Testing period. Trade on the training `β̂` only. |
 
-The rolling z-score in the test period uses trailing test-period data only. The only
-thing carried across is the fixed `β̂`.
+The z-score (μ̂_t and σ̂_t) in the test period uses trailing test period data only. 
+`β̂` is used from training period.
 
-Metrics: annualised Sharpe (`√252 · mean(r) / std(r)`, no risk-free rate subtracted
-since the spread is largely self-funding), total and annualised return, max drawdown,
-number of trades, win rate, mean holding period.
+Reported:
+- Sharpe (risk free rate is not subtracted as it relies on small amounts of capital)
+- Total and annualised return
+- Max drawdown
+- Win rate
+- Mean holding period ≈ `τ`
 
-Cost sensitivity at `c ∈ {0, 5, 10, 25}` bps one-way. How fast the result decays from
-gross to net matters as much as the gross number.
+Cost varied across `c ∈ {0, 5, 10, 25}` bps one way. A result that is positive gross
+whilst negative at 10bps has no edge.
 
-Benchmark is buy-and-hold WTI over the same window, to check whether the
-market-neutral version adds anything over directional exposure.
+Buy and hold WTI over the same window is the benchmark.
+Sharpe and drawdown matter not total return as high sharpe low drawdown allows for leverage.

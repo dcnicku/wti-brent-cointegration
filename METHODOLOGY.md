@@ -87,12 +87,12 @@ Sampled daily (4) becomes a AR(1) which can be fitted with OLS:
     Δs_t = a + b·s_{t-1} + u_t                                       (7)
     φ = 1 + b                                                        (8) 
 
-- `Δs_t` — Δ spread today
-- `s_{t-1}` — where the spread was t-1
-- `b` —  slope. How today's move depends on t-1
-- `a` — intercept
-- `u_t` — noise
-- `φ` — amount of t-1 deviation is present in t
+- `Δs_t` -  Δ spread today
+- `s_{t-1}` -  where the spread was t-1
+- `b` -   slope. How today's move depends on t-1
+- `a` - intercept
+- `u_t` - noise
+- `φ` -  amount of t-1 deviation is present in t
     
 For the spread to revert `-2 < b < 0` same as `-1 < φ < 1`.
 
@@ -109,15 +109,15 @@ spread reverts at all; the half-life asks how quickly.
 
 ## 5. Strategy
 
-### Standardising the spread
+### z-score
 
     z_t = (s_t - μ̂_t) / σ̂_t                                          (10)
 
-- `z_t` — how many standard deviations the spread sits from the mean
-- `s_t` — t spread
-- `μ̂_t` — average spread over the last `L` days
-- `σ̂_t` — standard deviation of the spread over `L` days
--  `L`  — amount of trailing days. 5τ, bounded to [30, 120] days
+- `z_t` -  how many standard deviations the spread sits from the mean
+- `s_t` -  t spread
+- `μ̂_t` -  average spread over the last `L` days
+- `σ̂_t` -  standard deviation of the spread over `L` days
+-  `L`  -  amount of trailing days. 5τ, bounded to [30, 120] days
 
 ### Rules
 
@@ -129,42 +129,40 @@ spread reverts at all; the half-life asks how quickly.
 | Stop loss | `\|z_t\| > 3.5` | exit, do not enter again until `\|z_t\| < 2.0` |
 | Time stop | held past `3τ` | exit, reversion failed within expected period |
 
-Exit at 0.5σ rather than 0 because the spread crosses exactly zero rarely and
-briefly. Waiting for it gives long holding periods and exits that sometimes never
-fire. 0.5σ picks up most of the convergence.
+Exit at 0.5σ rather than 0 because the spread almost never sits exactly at zero.
+Waiting causes long holds and exits that may never close.
 
-The cooldown on the stop is necessary. Going flat at `z = 3.6` with nothing else
-changed leaves `z` above the 2.0 entry threshold the next day, so a naive
-implementation re-enters the same losing trade and the stop does nothing. The spread
-has to come back inside the entry band first.
+The cooldown on the stop is necessary. Exiting at eg. `z = 3.7`
+leaves `z` above 2.0 entry level the next day. `z` has to go under 2.0 before re-entry.
+So the same losing trade is not re-entered.
 
-Time stop follows from (5): a 2σ deviation should be around 0.25σ after three
-half-lives. Still open past `3τ` and the reversion thesis has failed on its own
-terms, most likely because the relationship has shifted, so I close it wherever `z`
-is.
+Time stop: after three half-lives a 2σ gap should be around 0.25σ. Still in the
+trade after`3τ` means the reversion is not happening therefore it is closed.
 
-Execution lag: a signal from the close of day `t` is traded at the close of day
-`t+1`.
+Execution lag: signal from close of day `t` is traded at close of day `t+1`.
 
 ---
 
-## 6. P&L and costs
+## 6. Returns after costs
 
-From (2), the daily change in the spread is
+The daily Δ spread:
 
     Δs_t = Δx_t - β̂·Δy_t                                            (11)
 
-which in log terms is the return on long 1 unit of WTI, short `β̂` units of Brent.
-With position `p_t ∈ {-1, 0, +1}`:
+Also the daily return on long 1 unit of WTI against `β̂` units of Brent.
+The position `p_t` is +1 (long), -1 (short ) or 0 (not in a trade):
 
     r_t = p_{t-1} · (Δx_t - β̂·Δy_t)                                 (12)
 
-`p_{t-1}` rather than `p_t`, per the execution lag.
+
+- `r_t` - today's return
+- `p_{t-1}` -  position held coming into today
+- `(Δx_t - β̂·Δy_t)` - Δ  spread today
+- `p_{t-1}` - position execution lag.
 
 ### Costs
 
-Any change in position trades both legs. One-way cost `c` (0.0010 for 10bps) on each
-leg's notional:
+A position change trades both WTI and Brent. One-way cost `c` (10bps)
 
     cost_t = |p_{t-1} - p_{t-2}| · (1 + β̂) · c                      (13)
 

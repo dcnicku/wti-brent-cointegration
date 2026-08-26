@@ -1,7 +1,7 @@
 # Results
 
 - Hedge ratio (train): **1.020**
-- Half-life: **13.5 trading days**
+- Half life: **13.5 trading days**
 - Z-score window: **67 days**
 
 ## Out of sample, 2022 onwards
@@ -15,11 +15,11 @@
 
 Buy and hold WTI over the same window: Sharpe 0.26, total return 11.0%, max drawdown -55.3%.
 
-## But the P&L is a roll artefact
+## Conclusion
 
-- Month-start days (contract roll) are **4.8%** of the sample but earn **94.0%** of gross P&L
+- Contract roll days are **4.8%** of the sample but earn **94.0%** of gross P&L
 - The spread moves **4.8x** more on those days
-- **8 of the 20** biggest spread moves are month-start (chance would give about 1)
-- The single best day (2026-04-01) is **27.5%** of all gross P&L; the best 5 days are **64.1%**
+- **8 of the 20** biggest spread moves are contract roll days
+- The single best day (2026-04-01) is **27.5%** of results and the best 5 days are **64.1%**
 
-With month-start returns zeroed out, net Sharpe falls from **0.92** to **-0.21** and total return from **50.5%** to **-5.8%**.
+With Contract roll days returns removed. Sharpe falls from **0.92** to **-0.21** and total return from **50.5%** to **-5.8%**.

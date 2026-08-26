@@ -50,7 +50,7 @@ highlighting if they share a trend.
 | Costs | 0 / 5 / 10 / 25 bps  |
 | Split | Estimate on 2016–2021, trade 2022 onwards, 1 day execution lag |
 
-The maths is in [METHODOLOGY.md](METHODOLOGY.md).
+Maths in [METHODOLOGY.md](METHODOLOGY.md).
 
 ---
 
